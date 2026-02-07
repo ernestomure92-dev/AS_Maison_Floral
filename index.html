@@ -4,8 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rabbits & Sunflowers · Florería en CDMX</title>
-  <meta name="description" content="Arreglos florales con entrega el mismo día en CDMX. Pide por WhatsApp.">
-  <meta name="theme-color" content="#F7D958">
   <style>
     /* ===== SISTEMA DE TEMAS ===== */
     :root, html[data-theme="base"]{
@@ -14,72 +12,222 @@
       --verde-dark:#2E8742;
       --cafe:#5A3412;
       --dorado:#FFB84A;
-      --crema:#FFFDF9;   /* Fondo más limpio y neutro */
-      --marfil:#FFF1F5;  
+      --crema:#FFFDF9;
       --texto:#1B1B1B;
       --gris-600:#6B6B6B;
       --borde:#F0D6E0;
     }
     html[data-theme="sanvalentin"]{
       --amarillo:#FFD84D;
-      --verde:#D83D68;       /* Rosa más vibrante para lectura */
+      --verde:#D83D68;
       --verde-dark:#A62D4F;
       --cafe:#4A2A0E;
-      --dorado:#F1A5B9;
-      --crema:#FFF8FA;       /* Fondo rosa muy sutil */
-      --marfil:#FFE7EF;
+      --crema:#FFF8FA;
       --texto:#1B1B1B;
-      --gris-600:#755964;
       --borde:#F3C6D6;
     }
 
-    /* ===== BASE & ACCESIBILIDAD ===== */
+    /* ===== BASE ===== */
     *{box-sizing:border-box}
     html,body{
       margin:0; padding:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      font-family: system-ui, sans-serif;
       color:var(--texto);
       background-color: var(--crema);
       transition: background 0.4s ease;
-      line-height: 1.5;
+      scroll-behavior: smooth;
     }
 
-    /* Fondo Neutro y Elegante (Eliminada la imagen saturada) */
+    /* Fondo Neutro San Valentín */
     html[data-theme="sanvalentin"] body {
-      background:
-        radial-gradient(circle at 10% 10%, rgba(216,61,104,0.05), transparent 40%),
-        radial-gradient(circle at 90% 90%, rgba(216,61,104,0.03), transparent 40%),
-        var(--crema);
+      background: radial-gradient(circle at 10% 10%, rgba(216,61,104,0.04), transparent 40%), var(--crema);
     }
 
-    .visualmente-oculto {
-      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;
-    }
-
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
     .container{max-width:1100px;margin:0 auto;padding:0 16px}
+    .visualmente-oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 
-    /* ===== COMPONENTES ===== */
-    header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--borde)}
-    header .wrap{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--cafe); font-size: 1.1rem;}
-    .brand img{width:44px;height:44px;border-radius:10px; object-fit: cover;}
+    /* ===== HEADER & HERO ===== */
+    header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--borde)}
+    .header-wrap{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--cafe)}
+    .brand img{width:40px;height:40px;border-radius:8px;object-fit:cover}
 
-    nav a{padding:8px 12px; border-radius:8px; font-weight: 500; font-size: 14px;}
-    nav a:hover{background: rgba(0,0,0,0.04);}
-
-    .btn{display:inline-block;padding:14px 20px;border-radius:14px;font-weight:700; cursor: pointer; border: none; text-align: center; transition: transform 0.2s, opacity 0.2s;}
-    .btn:active{transform: scale(0.96);}
-    .btn-primary{background:var(--amarillo);color:#3c2a00;border:1px solid rgba(0,0,0,0.05)}
-    .btn-secondary{background:var(--verde);color:#fff;}
-    .btn-outline{border:1px solid var(--borde);color:var(--texto);background:#fff}
-
-    /* ===== SECCIONES ===== */
     .hero{padding:40px 0}
     .hero-grid{display:grid;gap:24px}
-    .hero h1{font-size:36px;line-height:1.2;margin:0 0 12px;color:var(--cafe)}
-    
-    .hero .img-container{
-      border
+    .hero h1{font-size:36px;margin:0;color:var(--cafe)}
+    .img-container{border-radius:32px;background:#fff;border:1px solid var(--borde);padding:20px;text-align:center}
+    .img-container img{max-height:350px;margin:0 auto}
+
+    /* ===== BOTONES & INPUTS ===== */
+    .btn{display:inline-block;padding:14px 22px;border-radius:14px;font-weight:700;text-decoration:none;transition:0.2s;border:none;cursor:pointer}
+    .btn-secondary{background:var(--verde);color:#fff}
+    .btn-outline{border:1px solid var(--borde);background:#fff}
+    .search input{width:100%;padding:14px;border-radius:14px;border:1px solid var(--borde);margin-top:20px}
+
+    /* ===== PRODUCTOS ===== */
+    .grid{display:grid;gap:16px;margin-top:20px}
+    .card{background:#fff;border:1px solid var(--borde);border-radius:20px;overflow:hidden}
+    .thumb{aspect-ratio:1/1;background:#f9f9f9;position:relative}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .price{color:var(--verde);font-weight:800;font-size:1.2rem}
+
+    /* ===== SECCIÓN RESEÑAS (NUEVA) ===== */
+    .reviews-section{background:rgba(255,255,255,0.5);padding:60px 0;margin-top:40px;border-radius:40px 40px 0 0}
+    .reviews-grid{display:grid;gap:20px;grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));}
+    .review-card{background:#fff;padding:25px;border-radius:20px;border:1px solid var(--borde);box-shadow:0 4px 15px rgba(0,0,0,0.02)}
+    .stars{color:var(--amarillo);margin-bottom:10px;font-size:1.2rem}
+    .review-text{font-style:italic;color:var(--gris-600);margin-bottom:15px}
+    .review-author{font-weight:700;display:flex;align-items:center;gap:10px}
+    .author-img{width:35px;height:35px;background:var(--marfil);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}
+
+    .whatsapp-fab{position:fixed;right:20px;bottom:20px;background:#25D366;color:#fff;border-radius:999px;padding:16px 24px;font-weight:700;text-decoration:none;z-index:100;box-shadow:0 8px 20px rgba(0,0,0,0.1)}
+
+    @media(min-width:768px){
+      .hero-grid{grid-template-columns:1.2fr 1fr;align-items:center}
+      .grid{grid-template-columns:repeat(3,1fr)}
+      .hero h1{font-size:48px}
+    }
+    @media(min-width:1024px){
+      .grid{grid-template-columns:repeat(4,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-wrap">
+      <a href="#" class="brand">
+        <img src="assets/logo.png" alt="R&S" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3062/3062223.png'">
+        <span>Rabbits &amp; Sunflowers</span>
+      </a>
+      <nav style="display:flex;gap:15px">
+        <a href="#catalogo" style="font-size:14px;font-weight:500">Catálogo</a>
+        <a href="#resenas" style="font-size:14px;font-weight:500">Reseñas</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1>Flores frescas para<br><span style="color:var(--verde)">momentos épicos 🚀</span></h1>
+        <p style="color:var(--gris-600)">Entrega hoy mismo en CDMX. Calidad premium garantizada.</p>
+        <div style="display:flex;gap:10px;margin-top:20px">
+          <a id="ctaHero" class="btn btn-secondary" target="_blank">Pedir WhatsApp 💬</a>
+          <a href="#catalogo" class="btn btn-outline">Ver Catálogo</a>
+        </div>
+        <div class="search">
+          <input id="buscar" type="search" placeholder="Busca tu flor favorita...">
+        </div>
+      </div>
+      <div class="img-container">
+        <img src="assets/hero/descarga.jfif" alt="Arreglo principal">
+      </div>
+    </div>
+  </section>
+
+  <section id="catalogo" class="container" style="padding:40px 0">
+    <h2 style="color:var(--cafe)">Nuestra Colección</h2>
+    <div id="productos" class="grid"></div>
+  </section>
+
+  <section id="resenas" class="reviews-section">
+    <div class="container">
+      <h2 style="color:var(--cafe);text-align:center;margin-bottom:40px">Lo que dicen nuestros clientes ✨</h2>
+      <div class="reviews-grid">
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"El arreglo llegó idéntico a la foto y las flores olían delicioso. ¡A mi novia le encantó!"</p>
+          <div class="review-author">
+            <div class="author-img">MA</div>
+            <span>Miguel Arreola</span>
+          </div>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Increíble servicio. Pedí a las 11 am y para las 2 pm ya estaba entregado en la oficina."</p>
+          <div class="review-author">
+            <div class="author-img">LC</div>
+            <span>Lucía C.</span>
+          </div>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Excelente atención por WhatsApp, resolvieron todas mis dudas sobre el envío."</p>
+          <div class="review-author">
+            <div class="author-img">RP</div>
+            <span>Roberto Palazuelos</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding:60px 0;text-align:center;color:var(--gris-600)">
+    <div class="container">
+      <p><strong>Rabbits & Sunflowers</strong></p>
+      <small>© <span id="year"></span> Florería artesanal en CDMX</small>
+    </div>
+  </footer>
+
+  <a id="waFab" class="whatsapp-fab" target="_blank">WhatsApp 💬</a>
+
+  <script>
+    // 1. UTILIDADES PRIMERO (Evita que la página quede en blanco)
+    const $ = s => document.querySelector(s);
+    const WA_NUMBER = "521551234567";
+
+    const CATALOGO = [
+      { titulo:"Te pienso 🌻", precio:599, img:"https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600" },
+      { titulo:"Bouquet R&S 🌹", precio:999, img:"https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=600" },
+      { titulo:"Dulce Amor 🍫", precio:849, img:"https://images.unsplash.com/photo-1509043759401-136742328bb3?w=600" },
+      { titulo:"Primavera ✨", precio:1200, img:"https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600" }
+    ];
+
+    // 2. FUNCIONES DE RENDER
+    function renderProductos(busqueda = ""){
+      const wrap = $("#productos");
+      if(!wrap) return;
+      wrap.innerHTML = "";
+      
+      const filtrados = CATALOGO.filter(p => p.titulo.toLowerCase().includes(busqueda.toLowerCase()));
+
+      filtrados.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="thumb"><img src="${p.img}" loading="lazy"></div>
+          <div style="padding:15px">
+            <h4 style="margin:0">${p.titulo}</h4>
+            <p class="price">$${p.precio} MXN</p>
+            <a class="btn btn-secondary" style="width:100%;display:block;font-size:14px" 
+               href="https://wa.me/${WA_NUMBER}?text=Hola, quiero el arreglo ${p.titulo}" target="_blank">Pedir 💬</a>
+          </div>
+        `;
+        wrap.appendChild(card);
+      });
+    }
+
+    // 3. LOGICA ESTACIONAL
+    function aplicarTema(){
+      const hoy = new Date();
+      if(hoy.getMonth() === 1 && hoy.getDate() <= 14){ // Febrero
+        document.documentElement.setAttribute('data-theme', 'sanvalentin');
+      }
+    }
+
+    // 4. INICIALIZACIÓN (Solo cuando el DOM está listo)
+    document.addEventListener("DOMContentLoaded", () => {
+      aplicarTema();
+      renderProductos();
+      
+      $("#year").textContent = new Date().getFullYear();
+      $("#buscar").addEventListener("input", e => renderProductos(e.target.value));
+      
+      const link = `https://wa.me/${WA_NUMBER}?text=Hola! Quiero informes 🌻`;
+      $("#ctaHero").href = link;
+      $("#waFab").href = link;
+    });
+  </script>
+</body>
+</html>
