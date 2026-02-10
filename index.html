@@ -4,8 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Maison Flore · Florería Artesanal en CDMX</title>
-  <meta name="description" content="Florería artesanal en CDMX. Arreglos florales frescos con entrega el mismo día." />
+  <meta name="description" content="Florería artesanal en CDMX. Arreglos florales frescos con entrega el mismo día. Rosas, girasoles y diseños únicos para cada ocasión." />
   <meta name="theme-color" content="#E85C7A" />
+  
+  <!-- Google Analytics (reemplaza GA_MEASUREMENT_ID) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
   
   <style>
     :root {
@@ -18,9 +27,11 @@
       --color-border: #F5CFD8;
       --color-text: #1B1B1B;
       --color-text-light: #6B6B6B;
+      --color-success: #22c55e;
       --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
       --radius-lg: 16px;
       --radius-xl: 24px;
+      --transition-base: 250ms ease;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -102,6 +113,7 @@
       transform: translateX(0);
       opacity: 1;
     }
+    .toast.success { border-left-color: var(--color-success); }
 
     /* ===== HEADER ===== */
     .header {
@@ -228,6 +240,15 @@
     .btn-secondary:hover {
       background: var(--color-bg);
       transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+    }
+    .btn-outline:hover {
+      background: var(--color-primary);
+      color: white;
     }
 
     .hero-actions { 
@@ -427,9 +448,6 @@
       color: white;
       font-size: 0.875rem;
       font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
 
     .product-info { padding: 1.25rem; }
@@ -458,58 +476,58 @@
     }
     .empty-state-icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
 
-    /* ===== LIGHTBOX ===== */
+    /* ===== LIGHTBOX CORREGIDO ===== */
     .lightbox {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.95);
       z-index: 10000;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
+      transition: opacity 0.3s ease;
     }
     .lightbox.active {
+      display: flex;
       opacity: 1;
-      visibility: visible;
     }
     .lightbox-content {
       position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
-    }
-    .lightbox-img {
-      max-width: 100%;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 8px;
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
-    }
-    .lightbox.active .lightbox-img {
-      transform: scale(1);
-    }
-    .lightbox-close {
-      position: absolute;
-      top: -50px;
-      right: 0;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2.5rem;
-      cursor: pointer;
-      width: 50px;
-      height: 50px;
+      width: 90vw;
+      height: 90vh;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      font-size: 2.5rem;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      transition: background 0.2s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      z-index: 10;
     }
     .lightbox-close:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.1);
     }
     .lightbox-nav {
       position: absolute;
@@ -518,44 +536,222 @@
       background: rgba(255,255,255,0.1);
       border: none;
       color: white;
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      font-size: 1.5rem;
+      font-size: 2rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
       backdrop-filter: blur(10px);
+      z-index: 10;
     }
     .lightbox-nav:hover {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.25);
       transform: translateY(-50%) scale(1.1);
     }
     .lightbox-prev { left: 20px; }
     .lightbox-next { right: 20px; }
-    
-    .lightbox-counter {
+    .lightbox-info {
       position: absolute;
-      bottom: -40px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
+      text-align: center;
       color: white;
-      font-size: 0.875rem;
+      z-index: 10;
+    }
+    .lightbox-caption {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .lightbox-counter {
+      font-size: 1rem;
       opacity: 0.8;
     }
-    
-    .lightbox-caption {
-      position: absolute;
-      bottom: -70px;
-      left: 50%;
-      transform: translateX(-50%);
+
+    /* ===== HOW TO BUY ===== */
+    .how-to-buy {
+      padding: 4rem 0;
+      background: white;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .steps-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      margin-top: 2rem;
+    }
+    .step-card {
+      text-align: center;
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      transition: all 0.3s;
+    }
+    .step-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--color-accent);
+    }
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: var(--color-primary);
       color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0 auto 1rem;
+    }
+    .step-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-title);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ===== FAQ ===== */
+    .faq {
+      padding: 4rem 0;
+    }
+    .faq-list {
+      max-width: 800px;
+      margin: 2rem auto 0;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: none;
+      border: none;
       font-size: 1.1rem;
       font-weight: 600;
-      text-align: center;
-      max-width: 80%;
+      color: var(--color-title);
+      cursor: pointer;
+      text-align: left;
+    }
+    .faq-question::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--color-primary);
+      transition: transform 0.3s;
+    }
+    .faq-item.active .faq-question::after {
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding-bottom: 1.5rem;
+    }
+
+    /* ===== CONTACT FORM ===== */
+    .contact {
+      padding: 4rem 0;
+      background: linear-gradient(to bottom, var(--color-bg), white);
+    }
+    .contact-grid {
+      display: grid;
+      gap: 3rem;
+      grid-template-columns: 1fr;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .contact-info h3 {
+      font-size: 1.5rem;
+      color: var(--color-title);
+      margin-bottom: 1rem;
+    }
+    .contact-info p {
+      color: var(--color-text-light);
+      margin-bottom: 2rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      color: var(--color-text);
+    }
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      border: 1px solid var(--color-border);
+    }
+
+    .form-container {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-xl);
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--color-title);
+      font-size: 0.9rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid var(--color-border);
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px rgba(232, 92, 122, 0.1);
+    }
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .form-row {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
     }
 
     /* ===== REVIEWS ===== */
@@ -707,7 +903,8 @@
     /* ===== RESPONSIVE ===== */
     @media (min-width: 768px) {
       .hero-grid { grid-template-columns: 1.1fr 1fr; }
-      .lightbox-nav { width: 60px; height: 60px; font-size: 2rem; }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .lightbox-nav { width: 60px; height: 60px; }
       .lightbox-prev { left: 40px; }
       .lightbox-next { right: 40px; }
     }
@@ -718,12 +915,13 @@
       .fab { padding: 1rem; border-radius: 50%; }
       .hero-image-wrapper img { height: 300px; }
       .lightbox-nav {
-        width: 40px;
-        height: 40px;
-        font-size: 1.25rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
       }
       .lightbox-prev { left: 10px; }
       .lightbox-next { right: 10px; }
+      .lightbox-caption { font-size: 1.2rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -747,13 +945,18 @@
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1); event.stopPropagation();">‹</button>
+    
     <div class="lightbox-content">
-      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-      <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">‹</button>
       <img src="" alt="" class="lightbox-img" id="lightboxImg" onclick="event.stopPropagation()">
-      <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">›</button>
-      <div class="lightbox-counter" id="lightboxCounter">1 / 6</div>
+    </div>
+    
+    <button class="lightbox-nav lightbox-next" onclick="changeImage(1); event.stopPropagation();">›</button>
+    
+    <div class="lightbox-info" onclick="event.stopPropagation()">
       <div class="lightbox-caption" id="lightboxCaption"></div>
+      <div class="lightbox-counter" id="lightboxCounter"></div>
     </div>
   </div>
 
@@ -766,7 +969,9 @@
       </a>
       <nav class="nav">
         <a href="#catalogo">Catálogo</a>
-        <a href="#resenas">Reseñas</a>
+        <a href="#como-comprar">Cómo comprar</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contacto">Contacto</a>
       </nav>
     </div>
   </header>
@@ -776,11 +981,11 @@
     <div class="container hero-grid">
       <div class="hero-content">
         <h1>Arreglos que<br><span>hablan por ti 💐</span></h1>
-        <p>Flores frescas con entrega el mismo día en CDMX. Diseños únicos para cada ocasión.</p>
+        <p>Flores frescas con entrega el mismo día en CDMX. Diseños únicos para cada ocasión especial.</p>
         
         <div class="hero-actions">
           <a href="https://wa.me/5651447982?text=Hola!%20Quiero%20informes%20sobre%20flores%20🌻" 
-             class="btn btn-primary" target="_blank" onclick="showToast('Abriendo WhatsApp...')">
+             class="btn btn-primary" target="_blank" onclick="trackEvent('Hero', 'WhatsApp_Click')">
             💬 Pedir por WhatsApp
           </a>
           <a href="#catalogo" class="btn btn-secondary">Ver Catálogo</a>
@@ -822,31 +1027,164 @@
     </div>
   </section>
 
+  <!-- How to Buy -->
+  <section class="how-to-buy" id="como-comprar">
+    <div class="container">
+      <h2 class="section-title" style="text-align: center;">¿Cómo comprar? 🛍️</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Elige tu arreglo</h3>
+          <p>Explora nuestro catálogo y selecciona el diseño que más te guste. Usa los filtros para encontrar el perfecto.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Contáctanos</h3>
+          <p>Haz clic en "Pedir ahora" o escríbenos por WhatsApp. Indica tu dirección de entrega y fecha deseada.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Confirma tu pago</h3>
+          <p>Te enviamos opciones de pago (transferencia, depósito o efectivo). ¡Y listo! Entrega el mismo día en CDMX.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <h2 class="section-title" style="text-align: center;">Preguntas frecuentes ❓</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">¿Hacen entregas el mismo día?</button>
+          <div class="faq-answer">
+            ¡Sí! Tenemos servicio express para entregas en menos de 3 horas en CDMX. También puedes programar tu entrega para una fecha específica.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">¿Cuál es el área de cobertura?</button>
+          <div class="faq-answer">
+            Entregamos en toda la Ciudad de México y algunas zonas del Estado de México (consulta disponibilidad por WhatsApp).
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">¿Puedo personalizar mi arreglo?</button>
+          <div class="faq-answer">
+            ¡Por supuesto! Contáctanos y cuéntanos tu idea. Podemos crear arreglos personalizados con los colores y flores que prefieras.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">¿Qué métodos de pago aceptan?</button>
+          <div class="faq-answer">
+            Aceptamos transferencia bancaria, depósito en OXXO, tarjeta (vía link de pago) y efectivo contra entrega en algunas zonas.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">¿Las flores duran garantizadas?</button>
+          <div class="faq-answer">
+            Sí, garantizamos frescura por 7 días. Si tus flores no duran ese tiempo, ¡te reponemos el arreglo sin costo!
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contacto">
+    <div class="container">
+      <h2 class="section-title" style="text-align: center;">Contáctanos 📞</h2>
+      <div class="contact-grid" style="margin-top: 2rem;">
+        <div class="contact-info">
+          <h3>¿Tienes dudas?</h3>
+          <p>Estamos aquí para ayudarte. Escríbenos por WhatsApp para respuesta inmediata, o llena el formulario y te contactamos pronto.</p>
+          
+          <div class="contact-item">
+            <div class="contact-icon">📱</div>
+            <div>
+              <strong>WhatsApp</strong><br>
+              <a href="https://wa.me/5651447982" style="color: var(--color-primary);">56 5144 7982</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <strong>Entregas en</strong><br>
+              Toda la CDMX y zona metropolitana
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <strong>Horario</strong><br>
+              Lunes a Domingo: 9:00 am - 8:00 pm
+            </div>
+          </div>
+        </div>
+
+        <div class="form-container">
+          <form id="contactForm" onsubmit="handleFormSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+              </div>
+              <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" name="telefono" required placeholder="55 1234 5678">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Correo electrónico (opcional)</label>
+              <input type="email" id="email" name="email" placeholder="tu@email.com">
+            </div>
+            <div class="form-group">
+              <label for="interes">¿Qué te interesa?</label>
+              <select id="interes" name="interes" required>
+                <option value="">Selecciona una opción</option>
+                <option value="catalogo">Ver catálogo completo</option>
+                <option value="personalizado">Arreglo personalizado</option>
+                <option value="evento">Flores para evento</option>
+                <option value="suscripcion">Suscripción mensual</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos qué necesitas..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              📨 Enviar mensaje
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Reviews -->
   <section class="reviews" id="resenas">
     <div class="container">
-      <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">
-        Experiencias de nuestros clientes ✨
-      </h2>
-      <div class="reviews-grid">
+      <h2 class="section-title" style="text-align: center;">Experiencias de nuestros clientes ✨</h2>
+      <div class="reviews-grid" style="margin-top: 2rem;">
         <article class="review-card">
           <div class="stars">★★★★★</div>
-          <p class="review-text">"Están tan padres las flores que me las quiero tatuar"</p>
+          <p class="review-text">"Están tan padres las flores que me las quiero tatuar. La calidad es increíble."</p>
           <div class="review-author">— Ponchis</div>
         </article>
         <article class="review-card">
           <div class="stars">★★★★★</div>
-          <p class="review-text">"Servicio express increíble. Llegó en menos de 3 horas."</p>
+          <p class="review-text">"Servicio express increíble. Llegó en menos de 3 horas y todo perfecto."</p>
           <div class="review-author">— Chuchin</div>
         </article>
         <article class="review-card">
           <div class="stars">★★★★★</div>
-          <p class="review-text">"La calidad y presentación superaron mis expectativas"</p>
+          <p class="review-text">"La calidad y presentación superaron mis expectativas. 100% recomendado."</p>
           <div class="review-author">— Emi</div>
         </article>
         <article class="review-card">
           <div class="stars">★★★★★</div>
-          <p class="review-text">"Diseños únicos y flores muy frescas. 100% recomendado"</p>
+          <p class="review-text">"Diseños únicos y flores muy frescas. Mi florería de confianza ahora."</p>
           <div class="review-author">— Tito Capotito</div>
         </article>
       </div>
@@ -860,9 +1198,9 @@
       <p>Florería artesanal en Ciudad de México</p>
       
       <div class="footer-social">
-        <a href="#" class="social-link" onclick="showToast('Próximamente 📸')">📷</a>
-        <a href="#" class="social-link" onclick="showToast('Próximamente 📘')">📘</a>
-        <a href="https://wa.me/5651447982" class="social-link">💬</a>
+        <a href="#" class="social-link" onclick="showToast('Instagram próximamente 📸')" aria-label="Instagram">📷</a>
+        <a href="#" class="social-link" onclick="showToast('Facebook próximamente 📘')" aria-label="Facebook">📘</a>
+        <a href="https://wa.me/5651447982" class="social-link" aria-label="WhatsApp">💬</a>
       </div>
       
       <p>© <span id="year"></span> Maison Flore. Hecho con 💗 en CDMX</p>
@@ -871,7 +1209,7 @@
 
   <!-- Floating Buttons -->
   <a href="https://wa.me/5651447982?text=Hola!%20Quiero%20informes%20sobre%20flores%20🌻" 
-     class="fab" target="_blank">
+     class="fab" target="_blank" onclick="trackEvent('FAB', 'WhatsApp_Click')">
     💬 <span>WhatsApp</span>
   </a>
 
@@ -886,14 +1224,14 @@
       DEBOUNCE_DELAY: 300
     };
 
-    // ===== DATA - USA TUS IMÁGENES LOCALES =====
+    // ===== DATA =====
     const CATALOGO = [
       { 
         id: 'te-pienso',  
         titulo: 'Te pienso 🌻',     
         precio: 599,  
         cat: ['cumple', 'express', 'regalos'], 
-        img: 'assets/catalogos/te-pienso.jpg',  // <-- TU IMAGEN LOCAL
+        img: 'assets/catalogos/te-pienso.jpg',
         badge: 'Más vendido'
       },
       { 
@@ -901,7 +1239,7 @@
         titulo: 'Bouquet R&S 🌹',    
         precio: 599,  
         cat: ['aniversario', 'express'],      
-        img: 'assets/catalogos/bouquet-rs.jpg',  // <-- TU IMAGEN LOCAL
+        img: 'assets/catalogos/bouquet-rs.jpg',
         badge: null
       },
       { 
@@ -909,7 +1247,7 @@
         titulo: 'Dulce Amor 🍫',    
         precio: 599,  
         cat: ['aniversario', 'express', 'cumple'], 
-        img: 'assets/catalogos/dulce-amor.jpg',  // <-- TU IMAGEN LOCAL
+        img: 'assets/catalogos/dulce-amor.jpg',
         badge: 'Nuevo'
       },
       { 
@@ -917,7 +1255,7 @@
         titulo: 'Amor azul 🫗',     
         precio: 899,  
         cat: ['aniversario', 'express', 'regalos'], 
-        img: 'assets/catalogos/amor-azul.jpg',  // <-- TU IMAGEN LOCAL
+        img: 'assets/catalogos/amor-azul.jpg',
         badge: 'Especial'
       },
       { 
@@ -925,7 +1263,7 @@
         titulo: 'Primavera ✨',     
         precio: 1200, 
         cat: ['cumple', 'regalos'],           
-        img: 'assets/catalogos/primavera.jpg',  // <-- TU IMAGEN LOCAL
+        img: 'assets/catalogos/primavera.jpg',
         badge: 'Premium'
       },
       { 
@@ -933,14 +1271,68 @@
         titulo: 'Caja de Rosas 🎁', 
         precio: 1100, 
         cat: ['aniversario', 'regalos'],      
-        img: 'assets/catalogos/caja-rosas.jpg',  // <-- TU IMAGEN LOCAL
+        img: 'assets/catalogos/caja-rosas.jpg',
         badge: null
       }
     ];
 
-    // ===== LIGHTBOX STATE =====
+    // ===== LIGHTBOX =====
     let currentImageIndex = 0;
     let lightboxOpen = false;
+
+    function openLightbox(index) {
+      currentImageIndex = index;
+      const lightbox = document.getElementById('lightbox');
+      const img = document.getElementById('lightboxImg');
+      const counter = document.getElementById('lightboxCounter');
+      const caption = document.getElementById('lightboxCaption');
+      
+      const product = CATALOGO[index];
+      
+      img.src = product.img;
+      img.alt = product.titulo;
+      counter.textContent = `${index + 1} / ${CATALOGO.length}`;
+      caption.textContent = `${product.titulo} — $${product.precio} MXN`;
+      
+      lightbox.classList.add('active');
+      lightboxOpen = true;
+      document.body.style.overflow = 'hidden';
+      
+      trackEvent('Lightbox', 'Open', product.titulo);
+    }
+
+    function closeLightbox(event) {
+      if (event && event.target !== event.currentTarget && !event.target.classList.contains('lightbox-close')) return;
+      
+      document.getElementById('lightbox').classList.remove('active');
+      lightboxOpen = false;
+      document.body.style.overflow = '';
+    }
+
+    function changeImage(direction) {
+      currentImageIndex += direction;
+      if (currentImageIndex < 0) currentImageIndex = CATALOGO.length - 1;
+      if (currentImageIndex >= CATALOGO.length) currentImageIndex = 0;
+      
+      const product = CATALOGO[currentImageIndex];
+      const img = document.getElementById('lightboxImg');
+      
+      img.style.opacity = '0.5';
+      setTimeout(() => {
+        img.src = product.img;
+        img.alt = product.titulo;
+        document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${CATALOGO.length}`;
+        document.getElementById('lightboxCaption').textContent = `${product.titulo} — $${product.precio} MXN`;
+        img.style.opacity = '1';
+      }, 150);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightboxOpen) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') changeImage(-1);
+      if (e.key === 'ArrowRight') changeImage(1);
+    });
 
     // ===== UTILITIES =====
     const debounce = (func, wait) => {
@@ -966,65 +1358,15 @@
       }, 3000);
     }
 
-    // ===== LIGHTBOX FUNCTIONS =====
-    function openLightbox(index) {
-      currentImageIndex = index;
-      const lightbox = document.getElementById('lightbox');
-      const img = document.getElementById('lightboxImg');
-      const counter = document.getElementById('lightboxCounter');
-      const caption = document.getElementById('lightboxCaption');
-      
-      const product = index === 0 ? CATALOGO[0] : CATALOGO[index - 1];
-      
-      img.src = product.img;
-      img.alt = product.titulo;
-      counter.textContent = `${index + 1} / ${CATALOGO.length}`;
-      caption.textContent = `${product.titulo} - $${product.precio} MXN`;
-      
-      lightbox.classList.add('active');
-      lightboxOpen = true;
-      document.body.style.overflow = 'hidden';
+    function trackEvent(category, action, label = '') {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', action, {
+          event_category: category,
+          event_label: label
+        });
+      }
+      console.log(`[Analytics] ${category}: ${action} ${label}`);
     }
-
-    function closeLightbox(event) {
-      if (event && event.target !== event.currentTarget) return;
-      
-      const lightbox = document.getElementById('lightbox');
-      lightbox.classList.remove('active');
-      lightboxOpen = false;
-      document.body.style.overflow = '';
-    }
-
-    function changeImage(direction) {
-      currentImageIndex += direction;
-      
-      if (currentImageIndex < 0) currentImageIndex = CATALOGO.length - 1;
-      if (currentImageIndex >= CATALOGO.length) currentImageIndex = 0;
-      
-      const product = currentImageIndex === 0 ? CATALOGO[0] : CATALOGO[currentImageIndex];
-      const img = document.getElementById('lightboxImg');
-      const counter = document.getElementById('lightboxCounter');
-      const caption = document.getElementById('lightboxCaption');
-      
-      // Fade effect
-      img.style.opacity = '0.5';
-      setTimeout(() => {
-        img.src = product.img;
-        img.alt = product.titulo;
-        counter.textContent = `${currentImageIndex + 1} / ${CATALOGO.length}`;
-        caption.textContent = `${product.titulo} - $${product.precio} MXN`;
-        img.style.opacity = '1';
-      }, 150);
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!lightboxOpen) return;
-      
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') changeImage(-1);
-      if (e.key === 'ArrowRight') changeImage(1);
-    });
 
     // ===== PRODUCT RENDERER =====
     let currentFilter = 'all';
@@ -1034,7 +1376,7 @@
       const container = document.getElementById('productos');
       const countElement = document.getElementById('resultsCount');
       
-      const filtered = CATALOGO.filter((p, index) => {
+      const filtered = CATALOGO.filter((p) => {
         const matchesCategory = currentFilter === 'all' || p.cat.includes(currentFilter);
         const matchesSearch = !currentSearch || 
                              p.titulo.toLowerCase().includes(currentSearch.toLowerCase());
@@ -1075,7 +1417,7 @@
               <div class="product-price">$${p.precio} <span>MXN</span></div>
               <a href="https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent(`Hola! Me interesa: ${p.titulo}`)}" 
                  class="btn btn-primary product-btn" target="_blank"
-                 onclick="event.stopPropagation(); showToast('Abriendo WhatsApp...')">
+                 onclick="event.stopPropagation(); trackEvent('Product', 'WhatsApp_Click', '${p.titulo}')">
                 💬 Pedir ahora
               </a>
             </div>
@@ -1084,13 +1426,53 @@
       }).join('');
 
       setTimeout(() => {
-        document.querySelectorAll('.product-card').forEach(card => {
-          card.classList.add('visible');
-        });
+        document.querySelectorAll('.product-card').forEach(card => card.classList.add('visible'));
       }, 100);
     }
 
-    // ===== EVENTS =====
+    // ===== FORM HANDLER =====
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      
+      const message = `Hola! Soy ${data.nombre}.
+Tel: ${data.telefono}
+${data.email ? `Email: ${data.email}` : ''}
+Interes: ${data.interes}
+${data.mensaje ? `Mensaje: ${data.mensaje}` : ''}`;
+      
+      const waLink = `https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent(message)}`;
+      
+      trackEvent('Contact', 'Form_Submit', data.interes);
+      showToast('Redirigiendo a WhatsApp...');
+      
+      setTimeout(() => {
+        window.open(waLink, '_blank');
+      }, 1000);
+    }
+
+    // ===== FAQ ACCORDION =====
+    function initFAQ() {
+      document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+          const item = button.parentElement;
+          const isActive = item.classList.contains('active');
+          
+          // Close all
+          document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+          
+          // Open clicked if wasn't active
+          if (!isActive) {
+            item.classList.add('active');
+            trackEvent('FAQ', 'Open', button.textContent);
+          }
+        });
+      });
+    }
+
+    // ===== INITIALIZATION =====
     document.addEventListener('DOMContentLoaded', () => {
       // Hide loader
       setTimeout(() => {
@@ -1100,7 +1482,7 @@
       // Set year
       document.getElementById('year').textContent = new Date().getFullYear();
 
-      // Filter buttons
+      // Filters
       document.getElementById('filtros').addEventListener('click', e => {
         if (e.target.classList.contains('filter-chip')) {
           document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
@@ -1128,9 +1510,10 @@
         else scrollTop.classList.remove('visible');
       }, 10));
 
-      // Initial render
+      // Init
       renderProducts();
-
+      initFAQ();
+      
       // Welcome toast
       setTimeout(() => showToast('¡Bienvenido a Maison Flore! 🌸'), 2000);
     });
