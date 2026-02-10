@@ -3,489 +3,1549 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Maison Flore · Florería en CDMX</title>
+  <meta name="description" content="Florería artesanal en CDMX. Arreglos florales frescos con entrega el mismo día. Rosas, girasoles y diseños únicos para cada ocasión." />
+  <meta name="keywords" content="florería CDMX, flores a domicilio, arreglos florales, rosas, girasoles, regalos" />
+  <meta name="author" content="Maison Flore" />
+  <meta name="theme-color" content="#E85C7A" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Maison Flore · Florería en CDMX" />
+  <meta property="og:description" content="Arreglos florales frescos con entrega express en CDMX" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/og-image.jpg" />
+  
+  <title>Maison Flore · Florería Artesanal en CDMX</title>
 
   <style>
-    /* ===== SISTEMA DE TEMAS (PALETA TARJETAS/POSTAL) ===== */
-    :root, html[data-theme="base"]{
-      --amarillo: #F3B6C2;      /* acento cálido */
-      --verde: #E85C7A;         /* primario UI */
-      --verde-dark: #A62D4F;    /* hover */
-
-      --cafe: #4A2A0E;          /* títulos */
-      --crema: #F9E6EB;         /* fondo */
-
-      --texto: #1B1B1B;
-      --gris-600: #6B6B6B;
-      --borde: #F5CFD8;
+    /* ===== DESIGN SYSTEM ===== */
+    :root, html[data-theme="base"] {
+      /* Colors */
+      --color-primary: #E85C7A;
+      --color-primary-dark: #A62D4F;
+      --color-accent: #F3B6C2;
+      --color-text: #1B1B1B;
+      --color-text-light: #6B6B6B;
+      --color-title: #4A2A0E;
+      --color-bg: #F9E6EB;
+      --color-surface: #FFFFFF;
+      --color-border: #F5CFD8;
+      
+      /* Spacing */
+      --space-xs: 0.5rem;
+      --space-sm: 0.75rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      
+      /* Typography */
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 2rem;
+      --text-4xl: 3rem;
+      
+      /* Effects */
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --radius-full: 9999px;
+      
+      /* Transitions */
+      --transition-fast: 150ms ease;
+      --transition-base: 250ms ease;
+      --transition-slow: 350ms ease;
     }
 
-    html[data-theme="sanvalentin"]{
-      --amarillo: #F3B6C2;
-      --verde: #D83D68;
-      --verde-dark: #A62D4F;
-
-      --cafe: #4A2A0E;
-      --crema: #FFF8FA;
-      --texto: #1B1B1B;
-      --borde: #F3C6D6;
+    html[data-theme="sanvalentin"] {
+      --color-primary: #D83D68;
+      --color-primary-dark: #A62D4F;
+      --color-accent: #F3B6C2;
+      --color-bg: #FFF8FA;
+      --color-border: #F3C6D6;
     }
 
-    /* ===== BASE ===== */
-    *{ box-sizing:border-box; }
-    html,body{
-      margin:0; padding:0;
-      font-family: system-ui, -apple-system, sans-serif;
-      color:var(--texto);
-      background:var(--crema);
-      transition: background .35s ease;
-      scroll-behavior:smooth;
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    img{ display:block; max-width:100%; height:auto; }
-    a{ color:inherit; }
 
-    .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-    .visualmente-oculto{
-      position:absolute !important;
-      width:1px; height:1px;
-      padding:0; margin:-1px;
-      overflow:hidden; clip:rect(0,0,0,0);
-      white-space:nowrap; border:0;
+    body {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--color-text);
+      background: var(--color-bg);
+      transition: background var(--transition-slow);
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* ===== UTILITIES ===== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    /* ===== LOADER ===== */
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity var(--transition-slow), visibility var(--transition-slow);
+    }
+
+    .page-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== TOAST ===== */
+    .toast-container {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--color-surface);
+      color: var(--color-text);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      transform: translateX(100%);
+      opacity: 0;
+      transition: all var(--transition-base);
+      pointer-events: auto;
+      border-left: 4px solid var(--color-primary);
+      font-weight: 500;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
     }
 
     /* ===== HEADER ===== */
-    header{
-      position:sticky; top:0; z-index:20;
-      background: rgba(255,255,255,.82);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--borde);
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--color-border);
+      transition: all var(--transition-base);
     }
-    .header-wrap{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 0; gap:16px;
+
+    .header.scrolled {
+      box-shadow: var(--shadow-md);
     }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800; color:var(--cafe);
-      text-decoration:none;
-      white-space:nowrap;
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md) 0;
+      gap: var(--space-md);
     }
-    .brand img{
-      width:40px; height:40px;
-      border-radius:10px;
-      object-fit:cover;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-weight: 800;
+      color: var(--color-title);
+      font-size: var(--text-lg);
+      transition: transform var(--transition-fast);
     }
-    .nav{
-      display:flex; gap:12px; align-items:center;
-      flex-wrap:wrap; justify-content:flex-end;
+
+    .brand:hover {
+      transform: scale(1.02);
     }
-    .nav a{
-      font-size:14px; font-weight:650;
-      text-decoration:none;
-      padding:8px 10px;
-      border-radius:10px;
-      transition: .2s ease;
+
+    .brand__logo {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      box-shadow: var(--shadow-sm);
     }
-    .nav a:hover{
-      background: rgba(255,255,255,.65);
-      transform: translateY(-1px);
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .nav__link {
+      position: relative;
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-light);
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+      overflow: hidden;
+    }
+
+    .nav__link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-accent);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all var(--transition-fast);
+      border-radius: var(--radius-md);
+      z-index: -1;
+    }
+
+    .nav__link:hover {
+      color: var(--color-title);
+    }
+
+    .nav__link:hover::before {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+
+    .nav__link--active {
+      color: var(--color-primary);
+    }
+
+    /* Mobile menu button */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: var(--space-sm);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-title);
+      transition: all var(--transition-fast);
     }
 
     /* ===== HERO ===== */
-    .hero{ padding:44px 0 10px; }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1fr; /* mobile */
-      gap:26px;
-      align-items:center;
-    }
-    /* CLAVE: evita que columnas se colapsen raro */
-    .hero-grid > * { min-width: 0; }
-
-    .hero h1{
-      font-size:36px;
-      margin:0 0 10px 0;
-      color:var(--cafe);
-      line-height:1.12;
-      letter-spacing:-.02em;
-      text-align:left;
-    }
-    .hero p{
-      margin:0;
-      color:var(--gris-600);
-      font-size:1.1rem;
-      text-align:left;
-    }
-    .cta-row{
-      display:flex; gap:10px; margin-top:18px;
-      flex-wrap:wrap;
+    .hero {
+      padding: var(--space-2xl) 0 var(--space-xl);
+      position: relative;
+      overflow: hidden;
     }
 
-    .img-container{
-      border-radius:28px;
-      background:#fff;
-      border:1px solid var(--borde);
-      padding:18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-      overflow:hidden;
-    }
-    .img-container img{
-      width:100%;
-      height:360px;             /* asegura presencia visual */
-      object-fit:cover;         /* se ve como “card” */
-      border-radius:18px;
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+      opacity: 0.4;
+      pointer-events: none;
     }
 
-    /* ===== BOTONES ===== */
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:14px 20px;
-      border-radius:14px;
-      font-weight:800;
-      text-decoration:none;
-      transition: .2s ease;
-      border:none;
-      cursor:pointer;
-      line-height:1;
-      user-select:none;
-      white-space:nowrap;
+    .hero__grid {
+      display: grid;
+      gap: var(--space-xl);
+      align-items: center;
     }
-    .btn-secondary{
-      background:var(--verde);
-      color:#fff;
+
+    .hero__content {
+      animation: fadeInUp 0.8s ease;
     }
-    .btn-secondary:hover{
-      background:var(--verde-dark);
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--color-title);
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+      letter-spacing: -0.02em;
+    }
+
+    .hero__title span {
+      color: var(--color-primary);
+      display: inline-block;
+      position: relative;
+    }
+
+    .hero__title span::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: var(--color-accent);
+      opacity: 0.4;
+      z-index: -1;
+      transform: skewX(-12deg);
+    }
+
+    .hero__subtitle {
+      font-size: var(--text-lg);
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+      max-width: 90%;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-lg);
+    }
+
+    .hero__visual {
+      position: relative;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .hero__image-wrapper {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+    }
+
+    .hero__image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      transition: transform var(--transition-slow);
+    }
+
+    .hero__image-wrapper:hover .hero__image {
+      transform: scale(1.03);
+    }
+
+    .hero__badge {
+      position: absolute;
+      top: var(--space-lg);
+      right: var(--space-lg);
+      background: var(--color-primary);
+      color: white;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      box-shadow: var(--shadow-lg);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      padding: 14px 24px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: var(--text-sm);
+      transition: all var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:active::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn--primary {
+      background: var(--color-primary);
+      color: white;
+      box-shadow: 0 4px 14px rgba(232, 92, 122, 0.4);
+    }
+
+    .btn--primary:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(232, 92, 122, 0.5);
+    }
+
+    .btn--secondary {
+      background: var(--color-surface);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn--secondary:hover {
+      background: var(--color-bg);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn--icon {
+      padding: var(--space-sm);
+    }
+
+    /* ===== SEARCH & FILTERS ===== */
+    .search-box {
+      position: relative;
+      margin-bottom: var(--space-md);
+    }
+
+    .search-box__input {
+      width: 100%;
+      padding: 16px 48px 16px 20px;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-base);
+      background: var(--color-surface);
+      transition: all var(--transition-fast);
+    }
+
+    .search-box__input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px rgba(232, 92, 122, 0.1);
+    }
+
+    .search-box__icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-light);
+    }
+
+    .filters {
+      display: flex;
+      gap: var(--space-xs);
+      overflow-x: auto;
+      padding: var(--space-xs) 0;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-chip {
+      padding: 10px 20px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      background: var(--color-surface);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-light);
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
       transform: translateY(-1px);
     }
-    .btn-outline{
-      border:1px solid var(--borde);
-      background:#fff;
-      color:var(--texto);
-    }
-    .btn-outline:hover{ transform: translateY(-1px); }
 
-    /* ===== BUSCADOR & BADGES ===== */
-    .search{ margin-top:16px; }
-    .search input{
-      width:100%;
-      padding:14px;
-      border-radius:14px;
-      border:1px solid var(--borde);
-      font-size:16px;
-      outline:none;
-      background:#fff;
-    }
-    .search input:focus{
-      border-color: rgba(216,61,104,.35);
-      box-shadow: 0 0 0 4px rgba(216,61,104,.12);
+    .filter-chip.active {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-title);
+      font-weight: 700;
     }
 
-    .badges{
-      display:flex; gap:8px;
-      overflow-x:auto;
-      padding:10px 0 0;
-      scrollbar-width:none;
-      -webkit-overflow-scrolling:touch;
-    }
-    .badge{
-      padding:10px 16px;
-      border:1px solid var(--borde);
-      border-radius:999px;
-      background:#fff;
-      cursor:pointer;
-      font-weight:750;
-      transition:.2s ease;
-      white-space:nowrap;
-    }
-    .badge:hover{ transform: translateY(-1px); }
-    .badge.active{
-      background:var(--amarillo);
-      border-color:transparent;
-      color:var(--cafe);
+    .filter-chip.active::after {
+      content: '✓';
+      margin-left: 6px;
+      font-size: 0.8em;
     }
 
-    /* ===== CATÁLOGO ===== */
-    #catalogo{ padding:34px 0 42px; }
-    .section-title{
-      margin:0;
-      color:var(--cafe);
-      letter-spacing:-.01em;
+    /* ===== CATALOG ===== */
+    .catalog {
+      padding: var(--space-2xl) 0;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(1, 1fr); /* mobile */
-      gap:16px;
-      margin-top:18px;
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
+      gap: var(--space-sm);
     }
-    .card{
-      background:#fff;
-      border:1px solid var(--borde);
-      border-radius:20px;
-      overflow:hidden;
-      transition: transform .25s ease, box-shadow .25s ease;
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      color: var(--color-title);
+      font-weight: 700;
     }
-    .card:hover{
+
+    .results-count {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+    }
+
+    .products-grid {
+      display: grid;
+      gap: var(--space-lg);
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .product-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition-base);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .product-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .product-card__image-wrapper {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    }
+
+    .product-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .product-card:hover .product-card__image {
+      transform: scale(1.08);
+    }
+
+    .product-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-md);
+    }
+
+    .product-card:hover .product-card__overlay {
+      opacity: 1;
+    }
+
+    .product-card__quick-view {
+      color: white;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .product-card__content {
+      padding: var(--space-md);
+    }
+
+    .product-card__title {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-xs);
+      line-height: 1.3;
+    }
+
+    .product-card__price {
+      font-size: var(--text-xl);
+      font-weight: 800;
+      color: var(--color-primary);
+      margin-bottom: var(--space-md);
+    }
+
+    .product-card__price span {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-light);
+    }
+
+    .product-card__btn {
+      width: 100%;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: var(--space-2xl);
+      color: var(--color-text-light);
+    }
+
+    .empty-state__icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-md);
+      opacity: 0.5;
+    }
+
+    /* ===== REVIEWS ===== */
+    .reviews {
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.5) 20%, rgba(255,255,255,0.5) 80%, transparent);
+      padding: var(--space-2xl) 0;
+      position: relative;
+    }
+
+    .reviews__grid {
+      display: grid;
+      gap: var(--space-lg);
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .review-card {
+      background: var(--color-surface);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+      position: relative;
+    }
+
+    .review-card::before {
+      content: '"';
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-md);
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: var(--color-accent);
+      opacity: 0.3;
+      line-height: 1;
+    }
+
+    .review-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+      box-shadow: var(--shadow-md);
     }
-    .thumb{
-      aspect-ratio:1/1;
-      background:#f7f7f7;
-      overflow:hidden;
-    }
-    .thumb img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-    .card-body{ padding:16px 16px 18px; }
-    .card-title{ margin:0; font-size:16px; }
-    .price{
-      margin:10px 0 14px;
-      color:var(--verde);
-      font-weight:900;
-      font-size:1.15rem;
-    }
-    .card .btn{ width:100%; }
 
-    /* ===== RESEÑAS ===== */
-    .reviews-section{
-      background:rgba(255,255,255,0.55);
-      padding:64px 0;
-      border-top:1px solid var(--borde);
+    .review-card__stars {
+      color: #fbbf24;
+      margin-bottom: var(--space-sm);
+      font-size: var(--text-lg);
+      letter-spacing: 2px;
     }
-    .reviews-title{
-      color:var(--cafe);
-      text-align:center;
-      margin:0 0 38px 0;
-    }
-    .reviews-grid{
-      display:grid;
-      gap:20px;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-    .review-card{
-      background:#fff;
-      padding:22px;
-      border-radius:20px;
-      border:1px solid var(--borde);
-    }
-    .stars{ color:var(--amarillo); margin-bottom:10px; letter-spacing:1px; }
 
-    /* ===== FOOTER + FAB ===== */
-    footer{
-      padding:56px 0;
-      text-align:center;
-      color:var(--gris-600);
+    .review-card__text {
+      font-style: italic;
+      color: var(--color-text);
+      margin-bottom: var(--space-md);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
     }
-    .whatsapp-fab{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      background:#25D366;
-      color:#fff;
-      border-radius:999px;
-      padding:14px 18px;
-      font-weight:900;
-      text-decoration:none;
-      z-index:100;
-      box-shadow:0 10px 24px rgba(0,0,0,0.14);
-      transition:.2s ease;
+
+    .review-card__author {
+      font-weight: 700;
+      color: var(--color-title);
+      font-size: var(--text-sm);
     }
-    .whatsapp-fab:hover{ transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: var(--space-2xl) 0 var(--space-xl);
+      text-align: center;
+      color: var(--color-text-light);
+      border-top: 1px solid var(--color-border);
+      margin-top: var(--space-2xl);
+    }
+
+    .footer__brand {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--color-title);
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer__social {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+      margin: var(--space-md) 0;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+    }
+
+    .social-link:hover {
+      background: var(--color-primary);
+      color: white;
+      transform: translateY(-3px);
+      border-color: var(--color-primary);
+    }
+
+    /* ===== FLOATING BUTTON ===== */
+    .fab {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: #25D366;
+      color: white;
+      padding: 16px 24px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: var(--text-sm);
+      box-shadow: 0 8px 28px rgba(37, 211, 102, 0.4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      z-index: 999;
+      transition: all var(--transition-fast);
+      animation: slideIn 0.5s ease 1s both;
+    }
+
+    .fab:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5);
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .fab__pulse {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: #25D366;
+      animation: pulse-ring 2s infinite;
+      z-index: -1;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    /* ===== SCROLL TO TOP ===== */
+    .scroll-top {
+      position: fixed;
+      right: 20px;
+      bottom: 90px;
+      width: 44px;
+      height: 44px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all var(--transition-fast);
+      z-index: 998;
+      box-shadow: var(--shadow-md);
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .scroll-top:hover {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
 
     /* ===== RESPONSIVE ===== */
-    @media (min-width: 768px){
-      .hero-grid{
-        grid-template-columns: 1.15fr 1fr; /* desktop: 2 columnas */
-        gap:30px;
+    @media (min-width: 640px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
-      .hero h1{ font-size:48px; }
-      .grid{ grid-template-columns: repeat(3, 1fr); }
+      
+      .reviews__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
-    @media (min-width: 1024px){
-      .grid{ grid-template-columns: repeat(4, 1fr); }
+
+    @media (min-width: 768px) {
+      .hero__grid {
+        grid-template-columns: 1.2fr 1fr;
+        gap: var(--space-2xl);
+      }
+
+      .hero__title {
+        font-size: var(--text-4xl);
+      }
+
+      .hero__image {
+        height: 480px;
+      }
+
+      .menu-toggle {
+        display: none;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .reviews__grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .nav {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .hero__title {
+        font-size: var(--text-2xl);
+      }
+
+      .fab {
+        padding: 14px;
+        border-radius: 50%;
+      }
+
+      .fab span {
+        display: none;
+      }
+    }
+
+    /* ===== REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ===== SELECTION ===== */
+    ::selection {
+      background: var(--color-accent);
+      color: var(--color-title);
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="container header-wrap">
-      <a href="#" class="brand" aria-label="Inicio">
-        <img src="assets/logo.png" alt="R&S"
-             onerror="this.src='https://cdn-icons-png.flaticon.com/512/3062/3062223.png'">
-        <span>Maison &amp; Flore</span>
-      </a>
+  <!-- Page Loader -->
+  <div class="page-loader" id="loader">
+    <div class="loader"></div>
+  </div>
 
-      <nav class="nav" aria-label="Navegación principal">
-        <a href="#catalogo">Catálogo</a>
-        <a href="#resenas">Reseñas</a>
-      </nav>
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="brand" aria-label="Maison Flore - Inicio">
+          <img src="assets/logo.png" alt="" class="brand__logo" 
+               onerror="this.src='https://cdn-icons-png.flaticon.com/512/3062/3062223.png'">
+          <span>Maison Flore</span>
+        </a>
+
+        <nav class="nav" aria-label="Navegación principal">
+          <a href="#catalogo" class="nav__link">Catálogo</a>
+          <a href="#resenas" class="nav__link">Reseñas</a>
+          <a href="#contacto" class="nav__link">Contacto</a>
+        </nav>
+
+        <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
   </header>
 
+  <!-- Hero Section -->
   <section class="hero">
-    <div class="container hero-grid">
-      <div>
-        <h1>Arreglos que<br><span style="color:var(--verde)">hablan por ti 💐</span></h1>
-        <p>Flores frescas con entrega el mismo día en CDMX.</p>
+    <div class="container hero__grid">
+      <div class="hero__content">
+        <h1 class="hero__title">
+          Arreglos que<br>
+          <span>hablan por ti 💐</span>
+        </h1>
+        <p class="hero__subtitle">
+          Flores frescas con entrega el mismo día en CDMX. Diseños únicos para cada ocasión especial.
+        </p>
 
-        <div class="cta-row">
-          <a id="ctaHero" class="btn btn-secondary" target="_blank" rel="noopener">
-            Pedir por WhatsApp 💬
+        <div class="hero__actions">
+          <a href="#" class="btn btn--primary" id="ctaHero">
+            <span>💬</span> Pedir por WhatsApp
           </a>
-          <a href="#catalogo" class="btn btn-outline">Ver Catálogo</a>
+          <a href="#catalogo" class="btn btn--secondary">
+            Ver Catálogo
+          </a>
         </div>
 
-        <div class="search">
-          <label class="visualmente-oculto" for="buscar">Buscar productos</label>
-          <input id="buscar" type="search" placeholder="Busca rosas, girasoles, amor..." />
+        <div class="search-box">
+          <label class="visually-hidden" for="buscar">Buscar productos</label>
+          <input 
+            type="search" 
+            id="buscar" 
+            class="search-box__input" 
+            placeholder="Busca rosas, girasoles, amor..." 
+            autocomplete="off"
+          >
+          <span class="search-box__icon">🔍</span>
         </div>
 
-        <div class="badges" id="filtros" role="tablist" aria-label="Filtros de catálogo">
-          <button class="badge active" data-filter="all" type="button">Todo</button>
-          <button class="badge" data-filter="cumple" type="button">Cumpleaños</button>
-          <button class="badge" data-filter="aniversario" type="button">Aniversario</button>
-          <button class="badge" data-filter="express" type="button">Express hoy</button>
-          <button class="badge" data-filter="regalos" type="button">Regalos</button>
+        <div class="filters" id="filtros" role="tablist" aria-label="Filtrar por categoría">
+          <button class="filter-chip active" data-filter="all" type="button" role="tab" aria-selected="true">
+            Todo
+          </button>
+          <button class="filter-chip" data-filter="cumple" type="button" role="tab" aria-selected="false">
+            Cumpleaños
+          </button>
+          <button class="filter-chip" data-filter="aniversario" type="button" role="tab" aria-selected="false">
+            Aniversario
+          </button>
+          <button class="filter-chip" data-filter="express" type="button" role="tab" aria-selected="false">
+            Express hoy
+          </button>
+          <button class="filter-chip" data-filter="regalos" type="button" role="tab" aria-selected="false">
+            Regalos
+          </button>
         </div>
       </div>
 
-      <div class="img-container">
-        <img src="assets/hero/jorge.png" alt="Arreglo del día">
-      </div>
-    </div>
-  </section>
-
-  <section id="catalogo" class="container">
-    <h2 class="section-title">Colección Floral</h2>
-    <div id="productos" class="grid" aria-live="polite"></div>
-  </section>
-
-  <section id="resenas" class="reviews-section">
-    <div class="container">
-      <h2 class="reviews-title">Experiencias de nuestros clientes ✨</h2>
-
-      <div class="reviews-grid">
-        <article class="review-card">
-          <div class="stars">★★★★★</div>
-          <p>"Están tan padres las flores que me las quiero tatuar"</p>
-          <small><strong>- Ponchis.</strong></small>
-        </article>
-
-        <article class="review-card">
-          <div class="stars">★★★★★</div>
-          <p>"El señor que entregó las flores venía pisteando y me invitó una chela!"</p>
-          <small><strong>- Emi.</strong></small>
-        </article>
-
-        <article class="review-card">
-          <div class="stars">★★★★★</div>
-          <p>"Me salvaron con el envío express, llegó en menos de 3 horas."</p>
-          <small><strong>- Chuchin.</strong></small>
-        </article>
-
-        <article class="review-card">
-          <div class="stars">★★★★★</div>
-          <p>"El que desarrolló esta página es un genio."</p>
-          <small><strong>- Tito Capotito</strong></small>
-        </article>
+      <div class="hero__visual">
+        <div class="hero__image-wrapper">
+          <span class="hero__badge">🔥 Más pedido</span>
+          <img 
+            src="assets/hero/jorge.png" 
+            alt="Arreglo floral premium con rosas y girasoles" 
+            class="hero__image"
+            onerror="this.src='https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800'"
+          >
+        </div>
       </div>
     </div>
   </section>
 
-  <footer>
+  <!-- Catalog Section -->
+  <section class="catalog" id="catalogo">
     <div class="container">
-      <p style="margin:0 0 8px 0;"><strong>Rabbits &amp; Sunflowers</strong></p>
-      <small>© <span id="year"></span> Hecho con amor en CDMX 🌷</small>
+      <div class="section-header">
+        <h2 class="section-title">Colección Floral</h2>
+        <span class="results-count" id="resultsCount"></span>
+      </div>
+      
+      <div class="products-grid" id="productos" role="region" aria-live="polite" aria-label="Productos disponibles">
+        <!-- Products injected via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section class="reviews" id="resenas">
+    <div class="container">
+      <h2 class="section-title" style="text-align: center; margin-bottom: var(--space-xl);">
+        Experiencias de nuestros clientes ✨
+      </h2>
+
+      <div class="reviews__grid">
+        <article class="review-card">
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"Están tan padres las flores que me las quiero tatuar. La calidad es increíble y el servicio impecable."</p>
+          <div class="review-card__author">— Ponchis</div>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"El señor que entregó las flores venía muy amable y puntual. ¡Las flores duraron más de una semana frescas!"</p>
+          <div class="review-card__author">— Emi</div>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"Me salvaron con el envío express, llegó en menos de 3 horas. ¡Superaron mis expectativas!"</p>
+          <div class="review-card__author">— Chuchin</div>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"El diseño de la página refleja perfecto la delicadeza de sus arreglos. Experiencia 10/10."</p>
+          <div class="review-card__author">— Tito Capotito</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="contacto">
+    <div class="container">
+      <div class="footer__brand">Maison Flore</div>
+      <p>Florería artesanal en Ciudad de México</p>
+      
+      <div class="footer__social">
+        <a href="#" class="social-link" aria-label="Instagram">
+          📷
+        </a>
+        <a href="#" class="social-link" aria-label="Facebook">
+          📘
+        </a>
+        <a href="#" class="social-link" aria-label="WhatsApp">
+          💬
+        </a>
+      </div>
+      
+      <small>© <span id="year"></span> Maison Flore. Hecho con 💗 en CDMX</small>
     </div>
   </footer>
 
-  <a id="waFab" class="whatsapp-fab" target="_blank" rel="noopener">WhatsApp 💬</a>
+  <!-- Floating WhatsApp Button -->
+  <a href="#" class="fab" id="waFab" aria-label="Contactar por WhatsApp">
+    <span class="fab__pulse"></span>
+    <span>💬</span>
+    <span>WhatsApp</span>
+  </a>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">
+    ↑
+  </button>
 
   <script>
-    const $ = (s) => document.querySelector(s);
-    const WA_NUMBER = "5651447982";
+    // ===== CONFIGURATION =====
+    const CONFIG = {
+      WA_NUMBER: '5651447982',
+      THEME_KEY: 'maisonflore-theme',
+      SCROLL_THRESHOLD: 100,
+      DEBOUNCE_DELAY: 300
+    };
 
+    // ===== DATA =====
     const CATALOGO = [
-      { id:"te-pienso",  titulo:"Te pienso 🌻",     precio:599,  cat:["cumple","express","regalos"], img:"assets/catalogos/flores rosas.jpg" },
-      { id:"bouquet-rs", titulo:"Bouquet R&S🌹",    precio:599,  cat:["aniversario","express"],      img:"assets/catalogos/flores_rojas.jpg" },
-      { id:"dulce-amor", titulo:"Dulce Amor 🍫",    precio:599,  cat:["aniversario","express","cumple"], img:"assets/catalogos/flores_combinadas.jpg" },
-      { id:"azulito",    titulo:"Amor azul 🫗",     precio:100,  cat:["aniversario","express","cumple","regalos"], img:"assets/catalogos/azul.jpg" },
-      { id:"primavera",  titulo:"Primavera ✨",     precio:1200, cat:["cumple","regalos"],           img:"https://images.unsplash.com/photo-1513151233558-d860c5398176?w=900" },
-      { id:"caja-rosas", titulo:"Caja de Rosas 🎁", precio:1100, cat:["aniversario","regalos"],      img:"https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=900" }
+      { 
+        id: 'te-pienso',  
+        titulo: 'Te pienso 🌻',     
+        precio: 599,  
+        cat: ['cumple', 'express', 'regalos'], 
+        img: 'assets/catalogos/flores rosas.jpg',
+        badge: 'Más vendido'
+      },
+      { 
+        id: 'bouquet-rs', 
+        titulo: 'Bouquet R&S 🌹',    
+        precio: 599,  
+        cat: ['aniversario', 'express'],      
+        img: 'assets/catalogos/flores_rojas.jpg',
+        badge: null
+      },
+      { 
+        id: 'dulce-amor', 
+        titulo: 'Dulce Amor 🍫',    
+        precio: 599,  
+        cat: ['aniversario', 'express', 'cumple'], 
+        img: 'assets/catalogos/flores_combinadas.jpg',
+        badge: 'Nuevo'
+      },
+      { 
+        id: 'azulito',    
+        titulo: 'Amor azul 🫗',     
+        precio: 100,  
+        cat: ['aniversario', 'express', 'cumple', 'regalos'], 
+        img: 'assets/catalogos/azul.jpg',
+        badge: 'Oferta'
+      },
+      { 
+        id: 'primavera',  
+        titulo: 'Primavera ✨',     
+        precio: 1200, 
+        cat: ['cumple', 'regalos'],           
+        img: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=900',
+        badge: 'Premium'
+      },
+      { 
+        id: 'caja-rosas', 
+        titulo: 'Caja de Rosas 🎁', 
+        precio: 1100, 
+        cat: ['aniversario', 'regalos'],      
+        img: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=900',
+        badge: null
+      }
     ];
 
-    function render(filtro = "all", busqueda = "") {
-      const wrap = $("#productos");
-      if (!wrap) return;
+    // ===== UTILITIES =====
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => document.querySelectorAll(selector);
 
-      wrap.innerHTML = "";
-      const q = (busqueda || "").trim().toLowerCase();
+    const debounce = (func, wait) => {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    };
 
-      const filtrados = CATALOGO.filter((p) => {
-        const matchCat = (filtro === "all") || (Array.isArray(p.cat) && p.cat.includes(filtro));
-        const matchSearch = !q || (p.titulo || "").toLowerCase().includes(q);
-        return matchCat && matchSearch;
+    const sanitizeHTML = (str) => {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    };
+
+    // ===== TOAST SYSTEM =====
+    const showToast = (message, type = 'success') => {
+      const container = $('#toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <span>${type === 'success' ? '✓' : 'ℹ'}</span>
+        <span>${sanitizeHTML(message)}</span>
+      `;
+      
+      container.appendChild(toast);
+      
+      // Trigger animation
+      requestAnimationFrame(() => {
+        toast.classList.add('show');
       });
 
-      if (!filtrados.length) {
-        wrap.innerHTML = "<p style='grid-column:1/-1; text-align:center'>No encontramos ese arreglo, ¡pero podemos diseñarlo para ti!</p>";
-        return;
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    };
+
+    // ===== THEME MANAGER =====
+    const ThemeManager = {
+      init() {
+        const savedTheme = localStorage.getItem(CONFIG.THEME_KEY);
+        const isValentines = this.isValentinesPeriod();
+        
+        if (savedTheme) {
+          this.setTheme(savedTheme);
+        } else if (isValentines) {
+          this.setTheme('sanvalentin');
+        }
+      },
+
+      isValentinesPeriod() {
+        const now = new Date();
+        return now.getMonth() === 1 && now.getDate() <= 14;
+      },
+
+      setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem(CONFIG.THEME_KEY, theme);
       }
+    };
 
-      filtrados.forEach((p) => {
-        const waText = encodeURIComponent(`Hola! Me interesa el arreglo: ${p.titulo}`);
-        const waLink = `https://wa.me/${WA_NUMBER}?text=${waText}`;
+    // ===== PRODUCT RENDERER =====
+    const ProductRenderer = {
+      init() {
+        this.container = $('#productos');
+        this.countElement = $('#resultsCount');
+        this.currentFilter = 'all';
+        this.currentSearch = '';
+        this.render();
+      },
 
-        const card = document.createElement("article");
-        card.className = "card";
-        card.innerHTML = `
-          <div class="thumb">
-            <img src="${p.img}" alt="${p.titulo}" loading="lazy">
+      render() {
+        const filtered = this.filterProducts();
+        this.updateCount(filtered.length);
+        
+        if (filtered.length === 0) {
+          this.renderEmpty();
+          return;
+        }
+
+        this.container.innerHTML = '';
+        filtered.forEach((product, index) => {
+          const card = this.createCard(product, index);
+          this.container.appendChild(card);
+          
+          // Staggered animation
+          setTimeout(() => {
+            card.classList.add('visible');
+          }, index * 100);
+        });
+      },
+
+      filterProducts() {
+        const searchLower = this.currentSearch.toLowerCase().trim();
+        
+        return CATALOGO.filter(product => {
+          const matchesCategory = this.currentFilter === 'all' || 
+                                 product.cat.includes(this.currentFilter);
+          const matchesSearch = !searchLower || 
+                               product.titulo.toLowerCase().includes(searchLower) ||
+                               product.cat.some(c => c.includes(searchLower));
+          return matchesCategory && matchesSearch;
+        });
+      },
+
+      createCard(product, index) {
+        const waText = encodeURIComponent(`Hola! Me interesa el arreglo: ${product.titulo}`);
+        const waLink = `https://wa.me/${CONFIG.WA_NUMBER}?text=${waText}`;
+        
+        const article = document.createElement('article');
+        article.className = 'product-card';
+        article.style.transitionDelay = `${index * 50}ms`;
+        
+        article.innerHTML = `
+          <div class="product-card__image-wrapper">
+            <img 
+              src="${product.img}" 
+              alt="${sanitizeHTML(product.titulo)}"
+              class="product-card__image"
+              loading="lazy"
+              onerror="this.src='https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=600'"
+            >
+            ${product.badge ? `<span class="hero__badge" style="top: 10px; left: 10px; font-size: 0.7rem;">${product.badge}</span>` : ''}
+            <div class="product-card__overlay">
+              <span class="product-card__quick-view">👁 Ver detalles</span>
+            </div>
           </div>
-          <div class="card-body">
-            <h4 class="card-title">${p.titulo}</h4>
-            <p class="price">$${p.precio} MXN</p>
-            <a class="btn btn-secondary" href="${waLink}" target="_blank" rel="noopener">Pedir 💬</a>
+          <div class="product-card__content">
+            <h3 class="product-card__title">${sanitizeHTML(product.titulo)}</h3>
+            <div class="product-card__price">
+              $${product.precio} <span>MXN</span>
+            </div>
+            <a href="${waLink}" 
+               class="btn btn--primary product-card__btn" 
+               target="_blank" 
+               rel="noopener"
+               data-product="${sanitizeHTML(product.titulo)}">
+              💬 Pedir ahora
+            </a>
           </div>
         `;
-        wrap.appendChild(card);
-      });
-    }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const hoy = new Date();
-      if (hoy.getMonth() === 1 && hoy.getDate() <= 14) {
-        document.documentElement.setAttribute("data-theme", "sanvalentin");
+        // Add click tracking
+        const btn = article.querySelector('.product-card__btn');
+        btn.addEventListener('click', (e) => {
+          showToast(`Abriendo WhatsApp para: ${product.titulo}`);
+        });
+
+        return article;
+      },
+
+      renderEmpty() {
+        this.container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state__icon">🌸</div>
+            <h3>No encontramos ese arreglo</h3>
+            <p>Pero podemos diseñar algo especial para ti. ¡Contáctanos!</p>
+            <a href="#" class="btn btn--primary" style="margin-top: 1rem;" id="emptyCta">
+              💬 Hablar por WhatsApp
+            </a>
+          </div>
+        `;
+        
+        $('#emptyCta')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.open(`https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent('Hola! Quiero un arreglo personalizado')}`, '_blank');
+        });
+      },
+
+      updateCount(count) {
+        if (this.countElement) {
+          this.countElement.textContent = `${count} producto${count !== 1 ? 's' : ''}`;
+        }
+      },
+
+      setFilter(filter) {
+        this.currentFilter = filter;
+        this.render();
+      },
+
+      setSearch(query) {
+        this.currentSearch = query;
+        this.render();
       }
+    };
 
-      $("#year").textContent = new Date().getFullYear();
+    // ===== SCROLL MANAGER =====
+    const ScrollManager = {
+      init() {
+        this.header = $('#header');
+        this.scrollTop = $('#scrollTop');
+        
+        window.addEventListener('scroll', debounce(() => this.handleScroll(), 10));
+        
+        this.scrollTop.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      },
 
-      const msg = encodeURIComponent("Hola! Quiero informes sobre flores 🌻");
-      $("#ctaHero").href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
-      $("#waFab").href  = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+      handleScroll() {
+        const scrollY = window.scrollY;
+        
+        // Header shadow
+        if (scrollY > 10) {
+          this.header.classList.add('scrolled');
+        } else {
+          this.header.classList.remove('scrolled');
+        }
 
-      $("#buscar").addEventListener("input", (e) => {
-        const activeCat = document.querySelector(".badge.active")?.dataset?.filter || "all";
-        render(activeCat, e.target.value);
-      });
+        // Scroll to top button
+        if (scrollY > CONFIG.SCROLL_THRESHOLD) {
+          this.scrollTop.classList.add('visible');
+        } else {
+          this.scrollTop.classList.remove('visible');
+        }
+      }
+    };
 
-      $("#filtros").addEventListener("click", (e) => {
-        const btn = e.target.closest(".badge");
-        if (!btn) return;
-        document.querySelectorAll(".badge").forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        render(btn.dataset.filter, $("#buscar").value);
-      });
+    // ===== EVENT HANDLERS =====
+    const EventHandlers = {
+      init() {
+        this.setupFilters();
+        this.setupSearch();
+        this.setupWhatsApp();
+        this.setupYear();
+      },
 
-      render();
+      setupFilters() {
+        const filters = $('#filtros');
+        const buttons = $$('.filter-chip');
+
+        filters.addEventListener('click', (e) => {
+          const btn = e.target.closest('.filter-chip');
+          if (!btn) return;
+
+          buttons.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          
+          const filter = btn.dataset.filter;
+          ProductRenderer.setFilter(filter);
+          
+          // Smooth scroll to catalog
+          $('#catalogo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      },
+
+      setupSearch() {
+        const searchInput = $('#buscar');
+        
+        searchInput.addEventListener('input', debounce((e) => {
+          ProductRenderer.setSearch(e.target.value);
+        }, CONFIG.DEBOUNCE_DELAY));
+
+        searchInput.addEventListener('focus', () => {
+          $('#catalogo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      },
+
+      setupWhatsApp() {
+        const msg = encodeURIComponent('Hola! Quiero informes sobre flores 🌻');
+        const waUrl = `https://wa.me/${CONFIG.WA_NUMBER}?text=${msg}`;
+        
+        $('#ctaHero').href = waUrl;
+        $('#waFab').href = waUrl;
+      },
+
+      setupYear() {
+        $('#year').textContent = new Date().getFullYear();
+      }
+    };
+
+    // ===== INITIALIZATION =====
+    document.addEventListener('DOMContentLoaded', () => {
+      // Hide loader
+      setTimeout(() => {
+        $('#loader').classList.add('hidden');
+      }, 500);
+
+      // Initialize modules
+      ThemeManager.init();
+      ProductRenderer.init();
+      ScrollManager.init();
+      EventHandlers.init();
+
+      // Welcome toast
+      setTimeout(() => {
+        showToast('¡Bienvenido a Maison Flore! 🌸');
+      }, 1500);
+    });
+
+    // Handle errors gracefully
+    window.addEventListener('error', (e) => {
+      console.error('Error capturado:', e.error);
     });
   </script>
 </body>
