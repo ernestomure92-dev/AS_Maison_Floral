@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Floral - QR Stand</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Formato Carta: 8.5 x 11 pulgadas = 215.9 x 279.4 mm */
+        .page {
+            width: 215.9mm;
+            height: 279.4mm;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header elegante */
+        .header {
+            background: linear-gradient(135deg, #2d5a27 0%, #4a7c43 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: "🌸";
+            position: absolute;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .header::after {
+            content: "🌸";
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.95;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Contenido principal */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        /* Decoración floral sutil */
+        .floral-decoration {
+            position: absolute;
+            opacity: 0.05;
+            font-size: 15rem;
+            z-index: 0;
+        }
+
+        .floral-top-left { top: -50px; left: -50px; }
+        .floral-bottom-right { bottom: -50px; right: -50px; transform: rotate(180deg); }
+
+        /* Contenedor del QR */
+        .qr-section {
+            text-align: center;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .qr-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: inline-block;
+            margin-bottom: 30px;
+            border: 3px solid #e8f5e9;
+            position: relative;
+        }
+
+        /* Zona de escaneo destacada */
+        .scan-frame {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px dashed #2d5a27;
+            border-radius: 15px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+        }
+
+        #qrcode img {
+            display: block;
+            width: 300px !important;
+            height: 300px !important;
+            image-rendering: crisp-edges;
+        }
+
+        /* Instrucciones */
+        .instructions {
+            margin-top: 20px;
+        }
+
+        .main-text {
+            font-size: 2.2rem;
+            color: #2d5a27;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sub-text {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* Pasos visuales */
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d4a5a5 0%, #c98b8b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(212, 165, 165, 0.4);
+        }
+
+        .step-text {
+            font-size: 1rem;
+            color: #555;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Beneficios */
+        .benefits {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px 40px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border-left: 5px solid #d4a5a5;
+        }
+
+        .benefits-title {
+            font-size: 1.2rem;
+            color: #2d5a27;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .benefits-list {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .benefits-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .benefits-list li::before {
+            content: "✓";
+            color: #2d5a27;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2d5a27;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer strong {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+        }
+
+        /* Controles de impresión (solo visibles en pantalla) */
+        .print-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #2d5a27 0%, #4a7c43 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #2d5a27;
+            border: 2px solid #2d5a27;
+        }
+
+        /* Estilos de impresión */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .page {
+                box-shadow: none;
+                width: 100%;
+                height: 100vh;
+            }
+            
+            .print-controls {
+                display: none !important;
+            }
+            
+            .floral-decoration {
+                opacity: 0.03;
+            }
+        }
+
+        /* Ajustes para pantalla */
+        @media screen and (max-width: 900px) {
+            .page {
+                transform: scale(0.5);
+                transform-origin: top center;
+                margin-bottom: -50%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="brand-name">Maison Floral</div>
+            <div class="tagline">Arte Floral & Diseño</div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="content">
+            <div class="floral-decoration floral-top-left">🌿</div>
+            <div class="floral-decoration floral-bottom-right">🌿</div>
+
+            <div class="qr-section">
+                <div class="qr-container">
+                    <div class="scan-frame"></div>
+                    <div id="qrcode"></div>
+                </div>
+
+                <div class="instructions">
+                    <div class="main-text">¡Escanea y Descubre!</div>
+                    <div class="sub-text">Accede a nuestro catálogo exclusivo y promociones especiales</div>
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-icon">📱</div>
+                        <div class="step-text">Abre tu cámara</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">📷</div>
+                        <div class="step-text">Apunta al código</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">🌸</div>
+                        <div class="step-text">Explora Maison</div>
+                    </div>
+                </div>
+
+                <div class="benefits">
+                    <div class="benefits-title">Al escanear recibes:</div>
+                    <ul class="benefits-list">
+                        <li> 🌹 Catálogo Digital 2026</li>
+                        <li> 🌻 Promoción 21 de marzo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <strong>www.maisonfloral.store</strong> | Síguenos @asmaisonfloral
+        </div>
+    </div>
+
+    <!-- Controles -->
+    <div class="print-controls">
+        <button class="btn btn-secondary" onclick="window.print()">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5z"/>
+                <path d="M3 4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5V8a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4.5z"/>
+                <path d="M2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H2z"/>
+            </svg>
+            Imprimir / Guardar PDF
+        </button>
+    </div>
+
+    <script>
+        // Generar QR de alta calidad
+        window.onload = function() {
+            const qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: "http://www.maisonfloral.store/",
+                width: 300,
+                height: 300,
+                colorDark: "#2d5a27",  // Verde marca
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H  // Alta corrección de errores
+            });
+        };
+
+        // Ajustar escala en pantallas pequeñas
+        if (window.innerWidth < 900) {
+            document.querySelector('.page').style.transform = `scale(${window.innerWidth / 450})`;
+        }
+    </script>
+</body>
+</html>
