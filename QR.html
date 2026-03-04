@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador QR - Maison Floral</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #2d5a27 0%, #4a7c43 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .controls {
+            padding: 40px;
+            background: #fafafa;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d5a27;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Lato', sans-serif;
+        }
+
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #4a7c43;
+            box-shadow: 0 0 0 3px rgba(74, 124, 67, 0.1);
+        }
+
+        .color-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: none;
+        }
+
+        .size-slider {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .size-display {
+            text-align: center;
+            margin-top: 5px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .preview-section {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            position: relative;
+        }
+
+        .qr-wrapper {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .qr-wrapper:hover {
+            transform: translateY(-5px);
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #qrcode img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #d4a5a5 0%, #c98b8b 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(212, 165, 165, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 165, 165, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+            box-shadow: none;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .brand-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #2d5a27;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .error-shake {
+            animation: shake 0.5s;
+            border-color: #e74c3c !important;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2d5a27;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="success-message" id="successMsg">
+        ¡QR descargado exitosamente!
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🌸 Maison Floral</h1>
+            <p>Generador de Códigos QR para Clientes</p>
+        </div>
+
+        <div class="controls">
+            <div class="form-group">
+                <label for="urlInput">URL del Sitio Web</label>
+                <input type="url" id="urlInput" value="http://www.maisonfloral.store/" placeholder="https://ejemplo.com">
+                <div class="input-hint">Los clientes serán redirigidos a esta URL al escanear</div>
+            </div>
+
+            <div class="form-group">
+                <label>Tamaño del Código QR</label>
+                <input type="range" id="sizeInput" class="size-slider" min="128" max="512" value="256" step="32">
+                <div class="size-display" id="sizeDisplay">256 x 256 px</div>
+            </div>
+
+            <div class="form-group">
+                <label>Colores</label>
+                <div class="color-group">
+                    <div>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="colorDark" value="#2d5a27">
+                            <span>QR Color</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="colorLight" value="#ffffff">
+                            <span>Fondo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="correctionLevel">Nivel de Corrección</label>
+                <select id="correctionLevel" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                    <option value="1">Bajo (7%)</option>
+                    <option value="0">Medio (15%)</option>
+                    <option value="3">Alto (25%)</option>
+                    <option value="2" selected>Máximo (30%)</option>
+                </select>
+                <div class="input-hint">Mayor corrección = mejor escaneo aunque el QR esté dañado</div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="resetDefault()">
+                Restaurar Valores
+            </button>
+        </div>
+
+        <div class="preview-section">
+            <div class="brand-badge">Vista Previa</div>
+            
+            <div class="qr-wrapper" id="qrWrapper">
+                <div id="qrcode"></div>
+            </div>
+
+            <button class="btn" onclick="downloadQR()">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                </svg>
+                Descargar QR
+            </button>
+            
+            <button class="btn btn-secondary" onclick="printQR()" style="margin-top: 10px;">
+                Imprimir
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let qrcode = null;
+        const defaultURL = "http://www.maisonfloral.store/";
+        
+        // Inicializar al cargar
+        window.onload = function() {
+            generateQR();
+            
+            // Event listeners para actualización en tiempo real
+            document.getElementById('urlInput').addEventListener('input', debounce(generateQR, 500));
+            document.getElementById('sizeInput').addEventListener('input', updateSizeDisplay);
+            document.getElementById('sizeInput').addEventListener('change', generateQR);
+            document.getElementById('colorDark').addEventListener('change', generateQR);
+            document.getElementById('colorLight').addEventListener('change', generateQR);
+            document.getElementById('correctionLevel').addEventListener('change', generateQR);
+        };
+
+        function updateSizeDisplay() {
+            const size = document.getElementById('sizeInput').value;
+            document.getElementById('sizeDisplay').textContent = `${size} x ${size} px`;
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function generateQR() {
+            const url = document.getElementById('urlInput').value || defaultURL;
+            const size = parseInt(document.getElementById('sizeInput').value);
+            const colorDark = document.getElementById('colorDark').value;
+            const colorLight = document.getElementById('colorLight').value;
+            const correctionLevel = parseInt(document.getElementById('correctionLevel').value);
+            
+            // Limpiar QR anterior
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            
+            // Validar URL básica
+            const urlInput = document.getElementById('urlInput');
+            if (url && !isValidURL(url)) {
+                urlInput.classList.add('error-shake');
+                setTimeout(() => urlInput.classList.remove('error-shake'), 500);
+                return;
+            }
+            
+            // Crear nuevo QR
+            try {
+                qrcode = new QRCode(qrContainer, {
+                    text: url,
+                    width: size,
+                    height: size,
+                    colorDark: colorDark,
+                    colorLight: colorLight,
+                    correctLevel: correctionLevel
+                });
+            } catch (e) {
+                console.error('Error generando QR:', e);
+            }
+        }
+
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function downloadQR() {
+            const qrCanvas = document.querySelector('#qrcode canvas');
+            const qrImage = document.querySelector('#qrcode img');
+            
+            let imageData;
+            if (qrCanvas) {
+                imageData = qrCanvas.toDataURL("image/png");
+            } else if (qrImage) {
+                imageData = qrImage.src;
+            } else {
+                alert('Por favor genere el código QR primero');
+                return;
+            }
+            
+            const link = document.createElement('a');
+            link.download = `maison-floral-qr-${Date.now()}.png`;
+            link.href = imageData;
+            link.click();
+            
+            showSuccess();
+        }
+
+        function printQR() {
+            const printWindow = window.open('', '_blank');
+            const qrCanvas = document.querySelector('#qrcode canvas');
+            const qrImage = document.querySelector('#qrcode img');
+            const url = document.getElementById('urlInput').value;
+            
+            let imageData;
+            if (qrCanvas) {
+                imageData = qrCanvas.toDataURL("image/png");
+            } else if (qrImage) {
+                imageData = qrImage.src;
+            }
+            
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>QR Code - Maison Floral</title>
+                    <style>
+                        body { 
+                            display: flex; 
+                            justify-content: center; 
+                            align-items: center; 
+                            height: 100vh; 
+                            margin: 0;
+                            font-family: Arial, sans-serif;
+                        }
+                        .container {
+                            text-align: center;
+                        }
+                        img {
+                            max-width: 400px;
+                            margin-bottom: 20px;
+                        }
+                        .url {
+                            color: #666;
+                            font-size: 14px;
+                            word-break: break-all;
+                        }
+                        .brand {
+                            color: #2d5a27;
+                            font-size: 24px;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="brand">🌸 Maison Floral</div>
+                        <img src="${imageData}" />
+                        <div class="url">${url}</div>
+                        <p style="color: #999; font-size: 12px; margin-top: 20px;">
+                            Escanea para visitar nuestra tienda
+                        </p>
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 250);
+        }
+
+        function resetDefault() {
+            document.getElementById('urlInput').value = defaultURL;
+            document.getElementById('sizeInput').value = 256;
+            document.getElementById('colorDark').value = '#2d5a27';
+            document.getElementById('colorLight').value = '#ffffff';
+            document.getElementById('correctionLevel').value = 2;
+            updateSizeDisplay();
+            generateQR();
+        }
+
+        function showSuccess() {
+            const msg = document.getElementById('successMsg');
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
